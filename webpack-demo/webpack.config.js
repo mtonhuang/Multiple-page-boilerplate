@@ -3,10 +3,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 module.exports = {
     //entry入口文件
+    // 多页面开发，配置多页面
     entry: {
-        app: './src/js/index.js',
+        index: './src/js/index.js',
         print: './src/js/print.js'
     },
     // output出口文件
@@ -20,32 +22,56 @@ module.exports = {
     // devServer开发服务器配置
     devServer: {                        //webpack-dev-server 能够实时重新加载
         contentBase: path.join(__dirname, "dist"),
+        host: 'localhost',        // 默认是localhost
         port: 3000,
-        hot: true
+        open: false,             // 是否自动打开浏览器
+        hot: true                // 开启热更新
     },
     // module处理对应模块
     module: {
         rules: [
-            //test 用于标识出应该被对应的 loader 进行转换的某个或某些文件。
-            //use 表示进行转换时，应该使用哪个 loader。
+            // 处理html文件图片引入问题
             {
-                test: /\.css$/,
+                test: /\.(htm|html)$/,
+                use: 'html-withimg-loader'
+            },
+            //处理css||less||sass
+            {
+                //test 用于标识出应该被对应的 loader 进行转换的某个或某些文件。
+                //use 表示进行转换时，应该使用哪个 loader。
+                test: /\.(sa|sc|c)ss$/,
                 use: ExtractTextWebpackPlugin.extract({
-                    fallback: "style-loader",
-                    use: 'css-loader'
-                })
-                /* use: ['style-loader', 'css-loader']
-                    也可以这样写，这种方式方便写一些配置参数
                     use: [
-                        {loader: 'style-loader'},
-                        {loader: 'css-loader'}
-                    ]
-                */
+                        {loader: 'css-loader'},
+                        {loader: 'sass-loader'},
+                        //引入postcss-loader
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: [
+                                    autoprefixer({
+                                        browsers: ['ie >= 8', 'Firefox >= 20', 'Safari >= 5', 'Android >= 4', 'Ios >= 6', 'last 4 version'],
+                                        remove: true
+                                    })
+                                ]
+                            }
+                        }
+                    ],
+                    publicPath: '../'
+                })
             },
             //加载图片
             {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: ['file-loader']
+                test: /\.(png|jpe?g|gif|svg)$/,
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            limit: 8192,    // 小于8k的图片自动转成base64格式，并且不会存在实体图片
+                            outputPath: 'images/'   // 图片打包后存放的目录
+                        }
+                    }
+                ]
             },
             //加载字体
             {
@@ -72,15 +98,17 @@ module.exports = {
     },
     // plugins对应的插件
     plugins: [
-        new CleanWebpackPlugin(['dist']), //打包之前清理dist文件夹里面多余的文件
+        // 在npm start命令下，打包的文件存在于内存中，并不会产生在dist目录下
+        new CleanWebpackPlugin(['dist']), //打包之前清理dist文件夹里面多余的文件,npm start时会清理掉dist
 
         new webpack.NamedModulesPlugin(),
+        // 热替换，热替换不是刷新
         new webpack.HotModuleReplacementPlugin(),
 
         new HtmlWebpackPlugin({           //设定HtmlWebpackPlugin，默认生成index.html
             template: './src/html/index.html',  //模板文件路径所在位置
             filename: 'index.html',
-            chunks: ['index'],            //对应的文件
+            chunks: ['index'],            //对应的文件 =>对应关系,index.js对应的是index.html
             hash: true                    //会在打包好的js后面加上hash串
         }),
         new HtmlWebpackPlugin({
