@@ -119,5 +119,17 @@ module.exports = {
         }),
         // 拆分后会把css文件放到dist目录下的css/style.css
         new ExtractTextWebpackPlugin('css/style.css')
-    ]
+    ],
+
+    // resovle解析，配置别名和省略后缀名
+    resolve: {
+        //别名
+        /*
+        alias: {
+            $: './src/jquery.js'
+        },
+        */
+        // 省略后缀
+        extensions: ['.js','.json','.css']
+    }
 };
