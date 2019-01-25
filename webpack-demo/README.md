@@ -18,7 +18,7 @@ npm start
      }
 ```
 ### 引用CSS文件
-#### extract-text-webpack-plugin插件会将打包到js里的css文件进行一个拆分,打包的html页面就以link的方式去引入css了
+extract-text-webpack-plugin插件会将打包到js里的css文件进行一个拆分,打包的html页面就以link的方式去引入css了
 ```
     {
        test: /\.css$/,
@@ -34,7 +34,7 @@ npm start
 ```
 
 ### 引用图片
-#### 处理图片方面，也需要loader,如果是在css文件里引入的如背景图之类的图片，就需要指定一下相对路径
+处理图片方面，也需要loader,如果是在css文件里引入的如背景图之类的图片，就需要指定一下相对路径
 ```
 module.exports = {
     module: {
@@ -64,7 +64,7 @@ module.exports = {
 ```
 
 ### 页面img引用图片
-#### 这样再打包后的html文件下img就可以正常引用图片路径了
+这样再打包后的html文件下img就可以正常引用图片路径了
 ```
 module.exports = {
     module: {
