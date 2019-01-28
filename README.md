@@ -1,2 +1,2 @@
 ﻿# webpack
-使用webpack搭建一个简单的cli的demo
+使用webpack4.0搭建
