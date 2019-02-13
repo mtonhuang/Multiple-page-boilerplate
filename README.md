@@ -12,7 +12,7 @@ npm install
 npm start
 ```
 
-其他基本配置说明都在webpack.config.js中，就不再赘述了，以下是我在搭建demo是遇到的问题，我觉得需要记录下来
+其他基本配置说明都在webpack.config.js中，就不再赘述了，以下是我在搭建demo事遇到的问题，我觉得需要记录下来
 
 ### 解决Webpack4.0 打包警告问题
 ```
