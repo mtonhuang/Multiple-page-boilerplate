@@ -12,6 +12,8 @@ npm install
 npm start
 ```
 
+其他基本配置说明都在webpack.config.js中，就不再赘述了，以下是我在搭建demo是遇到的问题，我觉得需要记录下来
+
 ### 解决Webpack4.0 打包警告问题
 ```
 "scripts": {
@@ -103,4 +105,16 @@ if (module.hot) {
     // 实现热更新
     module.hot.accept();
 }
+```
+
+### 上传git忽略node_module等文件
+
+在根目录新建.gitignore文件
+
+```
+.DS_Store
+node_modules/
+dist/
+npm-debug.log
+
 ```
