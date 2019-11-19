@@ -7,24 +7,23 @@ const autoprefixer = require('autoprefixer');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');//压缩css插件
 module.exports = {
     //entry入口文件
-    // 多页面开发，配置多页面
     entry: {
-        index: './src/js/index.js'
+        index: './src/js/index.js' //多页面开发，可配置多页面
     },
     // output出口文件
     output: {
-        // [name]就可以将出口文件名和入口文件名一一对应
-        // 添加hash可以防止文件缓存，每次都会生成4位的hash串
-        filename: "[name].[hash:4].js",  // 打包后会生成index.js和print.js文件
-        path: path.resolve(__dirname, 'dist')
+        //[name]就可以将出口文件名和入口文件名一一对应
+        //添加hash可以防止文件缓存，每次都会生成4位的hash串
+        filename: "[name].[hash:4].js", //打包后会生成index.js文件
+        path: path.resolve(__dirname, 'dist') //输出文件夹
     },
     // devServer开发服务器配置
-    devServer: {                        //webpack-dev-server 能够实时重新加载
+    devServer: { //webpack-dev-server 能够实时重新加载
         contentBase: path.join(__dirname, "dist"),
-        host: 'localhost',        // 默认是localhost
+        host: 'localhost', //默认是localhost
         port: 3000,
-        open: false,             // 是否自动打开浏览器
-        hot: true                // 开启热更新
+        open: false, //是否自动打开浏览器
+        hot: true //开启热更新
     },
     // module处理对应模块
     module: {
