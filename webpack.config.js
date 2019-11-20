@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');//压缩css插件
+// const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');//压缩css插件
 module.exports = {
     //entry入口文件
     entry: {
@@ -22,7 +22,7 @@ module.exports = {
         contentBase: path.join(__dirname, "dist"),
         host: 'localhost', //默认是localhost
         port: 3000,
-        open: false, //是否自动打开浏览器
+        open: true, //是否自动打开浏览器
         hot: true //开启热更新
     },
     // module处理对应模块
@@ -48,7 +48,6 @@ module.exports = {
                             options: {
                                 plugins: [
                                     autoprefixer({
-                                        browsers: ['ie >= 8', 'Firefox >= 20', 'Safari >= 5', 'Android >= 4', 'Ios >= 6', 'last 4 version'],
                                         remove: true
                                     })
                                 ]
@@ -103,7 +102,7 @@ module.exports = {
         // 拆分后会把css文件放到dist目录下的css/style.css
         new ExtractTextWebpackPlugin('css/[name].[hash].css'),
 
-        new OptimizeCssAssetsPlugin()
+        // new OptimizeCssAssetsPlugin()
     ],
 
     // resovle解析，配置别名和省略后缀名
